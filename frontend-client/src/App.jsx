@@ -1,4 +1,4 @@
-import Navbar from "./components/navbar.component";
+import Navbar from "./components/navbar components/navbar.component";
 import {Routes, Route} from "react-router-dom";
 import UserAuthForm from "./pages/userAuthForm.page";
 const App = () => {
