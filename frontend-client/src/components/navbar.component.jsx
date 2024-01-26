@@ -1,12 +1,14 @@
  
  import logo from '../imgs/logo.png';
-    import { Link } from 'react-router-dom';
+    import { Link, Outlet } from 'react-router-dom';
     import { useState } from 'react';
  
  const Navbar = () => {
 
     const [searchBoxVisibility, setSearchBoxVisibility] = useState(false);
     return (
+        <>
+
         <nav className="navbar">
 
                 <Link to = "/" className='flex-none w-10'>
@@ -44,6 +46,13 @@
             
 
         </nav>
+
+        {/* This outlet allows us to do nested routes like in app.jsx so it can dispaly both "signup/in page" texts*/}
+        <Outlet/>
+        
+        
+        
+        </>
     )
  }
 
