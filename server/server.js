@@ -5,6 +5,7 @@ import bcrypt from "bcrypt";
 import User from "./Schema/User.js";
 import { nanoid } from "nanoid";
 import jwt from "jsonwebtoken";
+import cors from "cors";
 
 const server = express();
 let PORT = 3000;
@@ -12,7 +13,7 @@ let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; // regex for e
 let passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/; // regex for password
 
 server.use(express.json()); //middleware to accept and send the json data
-
+server.use(cors()); //enable the server to accept data from anywhere
 /**CONNECTING THE DB */
 mongoose.connect(process.env.DB_LOCATION, {
   autoIndex: true,
