@@ -6,7 +6,7 @@ import User from "./Schema/User.js";
 import { nanoid } from "nanoid";
 import jwt from "jsonwebtoken";
 import cors from "cors";
-
+import aws from "aws-sdk";
 const server = express();
 let PORT = 3000;
 let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; // regex for email
@@ -14,12 +14,36 @@ let passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/; // regex for pass
 
 server.use(express.json()); //middleware to accept and send the json data
 server.use(cors()); //enable the server to accept data from anywhere
-/**CONNECTING THE DB */
+
+/***************************************************CONNECTING THE DB **********************************************************************/
 mongoose.connect(process.env.DB_LOCATION, {
   autoIndex: true,
 });
 
-/**FORMATING THE DATA */
+/***************************************************SETTING UP S3 BUCKET(CONNECTING TO AWS) **********************************************************************/
+const s3 = new aws.S3({
+  region: "us-east-2",
+  accessKeyId: process.env.AWS_ACCESS_KEY,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+});
+
+/***************************************************GENERATE URL FOR PICTURE UPLOADS **********************************************************************/
+const generateUploadURL = async () => {
+  const date = new Date();
+  const imageName = `${nanoid()}-${date.getTime()}.jpeg`;
+
+  //want a URL that will have the putObject functionality
+  //Key = name of the file
+  //This is async because we have to wait for the URL to be generated before returning it
+  return await s3.getSignedUrlPromise("putObject", {
+    Bucket: "fulstack-blogging-website",
+    Key: imageName,
+    Expires: 1000,
+    ContentType: "image/jpeg",
+  });
+};
+
+/***************************************************FORMATING THE DATA **********************************************************************/
 const formatDataToSend = (user) => {
   //param 1: what data I want to convert to token
   //param 2: a private key to encrypt the data and hash the JWT
@@ -28,15 +52,17 @@ const formatDataToSend = (user) => {
     process.env.SECRET_ACCESS_KEY
   );
 
+  //sending this back to the front end
   return {
     access_token,
     profile_img: user.personal_info.profile_img,
     username: user.personal_info.username,
     fullname: user.personal_info.fullname,
+    test: "test",
   };
 };
 
-/**GENERATING USERNAME */
+/***************************************************GENERATING USERNAME**********************************************************************/
 const generatedUsername = async (email) => {
   let username = email.split("@")[0];
   let isUsernameExists = await User.exists({
@@ -47,9 +73,19 @@ const generatedUsername = async (email) => {
   return username;
 };
 
-/****MAKING ROUTES FOR SIGN UP****/
+/***************************************************UPLOAD IMAGE URL ROUTE**********************************************************************/
+server.get("/get-upload-url", async (req, res) => {
+  generateUploadURL()
+    .then((url) => res.status(200).json({ uploadUrl: url }))
+    .catch((err) => {
+      console.log(err);
+      return res.status(500).json({ error: err.message });
+    });
+});
+
+/*************************************************** MAKING ROUTES FOR SIGN UP**********************************************************************/
 //req = data from the front end
-//res = response sending to frontened
+//res = response sending y frontened
 server.post("/signup", (req, res) => {
   //destructuring the data from the front end(req.body)
   let { fullname, email, password } = req.body;
@@ -87,7 +123,7 @@ server.post("/signup", (req, res) => {
       },
     });
 
-    //Saving the user:
+    //Saving the user & sending the data to the front end: via "formatDataToSend" function
     //since the user.save is a promise, we do .then to be able to do the next thing
     //userStored = what you get when you do user.save
     user
@@ -102,13 +138,13 @@ server.post("/signup", (req, res) => {
         return res.status(500).json({ error: err.message });
       });
 
-    console.log(hashed_password);
+    // console.log(hashed_password);
   });
 
   //   if (email.length) return res.status(200).json({ status: "success" });
 });
 
-/****MAKING ROUTES FOR SIGN IN****/
+/*************************************************** MAKING ROUTES FOR SIGN IN**********************************************************************/
 server.post("/signin", (req, res) => {
   let { email, password } = req.body;
 

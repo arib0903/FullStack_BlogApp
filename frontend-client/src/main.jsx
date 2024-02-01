@@ -5,12 +5,12 @@ import './index.css'
 import { BrowserRouter } from 'react-router-dom'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode> 
+  <React.Fragment> 
 
     {/* adding this around the app allows us to route through pages */}
     <BrowserRouter>
       <App />
     </BrowserRouter>
     
-  </React.StrictMode>,
+   </React.Fragment>
 )

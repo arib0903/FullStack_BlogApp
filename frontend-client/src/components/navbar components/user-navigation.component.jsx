@@ -5,8 +5,11 @@ import { removeFromSession } from "../../common/session";
 import AnimationWrapper from "../../common/page-animation";
 
 const UserNavigationPanel = ()=>{
+
+    // 1. use UseContext to access the global state variable (userAuth) and it's setter function (setUserAuth)
     const {userAuth: {username}, setUserAuth} = useContext(UserContext);
 
+    // 2. CREATE FUNCTION TO SIGN OUT USER
     const signOutUser = () => {
     removeFromSession("user");
     setUserAuth({ access_token: null });
@@ -20,15 +23,9 @@ const UserNavigationPanel = ()=>{
                 <p> Write </p>
             </Link>
 
-            <Link to = {`/user/${username}` } className="link pl-8 py-4">
-            Profile
-            </Link>
-            <Link to = "/dashboard/blogs" className="link pl-8 py-4">
-            Dashboard
-            </Link>
-            <Link to = "/settings/edits-profile" className="link pl-8 py-4">
-            Settings
-            </Link>
+            <Link to = {`/user/${username}` } className="link pl-8 py-4">Profile</Link>
+            <Link to = "/dashboard/blogs" className="link pl-8 py-4">Dashboard</Link>
+            <Link to = "/settings/edits-profile" className="link pl-8 py-4">  Settings</Link>
 
             <span className="absolute border-t border-grey w-[100%]"></span>
 
