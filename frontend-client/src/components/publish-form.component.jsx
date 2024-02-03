@@ -1,15 +1,21 @@
-import { Toaster } from "react-hot-toast";
+import { Toaster, toast } from "react-hot-toast";
 import AnimationWrapper from "../common/page-animation";
 import { useContext } from "react";
 import { EditorContext } from "../pages/editor.pages";
 import Tag from "./tags.component";
-
+import axios from "axios";
+import { UserContext } from "../App";
+import { useNavigate } from "react-router-dom";
 
 const PublishForm = () => {  
 
-    let {blog, blog:{banner,title,tags,des},setEditorState,setBlog} = useContext(EditorContext);
+    let {blog, blog:{banner,title,tags,des,content},setEditorState,setBlog} = useContext(EditorContext);
     let characterLimit = 200;
     let tagLimit = 10;
+
+    let {userAuth: {access_token} } = useContext(UserContext);
+
+    let navigate = useNavigate();
     const handleBlogTitleChange = (e) => {  
         let input = e.target
         setBlog({...blog, title: input.value})
@@ -46,6 +52,63 @@ const PublishForm = () => {
             }
         }
     }
+
+
+    const publishBlog = (e) => {
+
+        //prevent from user submitting data twice
+        if(e.target.className.includes('disable')){
+            return;
+        }
+
+        if(!title.length){
+            return toast.error("Write blog title before publishing");
+
+        }
+        if(!des.length){
+            return toast.error("Write blog description before publishing");
+        }
+
+        if(!tags.length){
+            return toast.error("Add at least 1 tag before publishing");
+        }
+        let loadingToast = toast.loading("Publishing...");
+
+        e.target.classList.add('disable');
+
+        let blogObject = {
+            title,
+            des,
+            tags,
+            banner,
+            content,
+            draft: false
+        }
+
+        axios.post(import.meta.env.VITE_SERVER_DOMAIN + "/create-blog", blogObject,{
+            headers: {
+                'Authorization': `Bearer ${access_token}`
+            }
+        }).then(()=>{
+            e.target.classList.remove('disable');
+            toast.dismiss(loadingToast);
+            toast.success("Blog Published!");
+
+            setTimeout(() => {
+                //just for now redirectng to home page
+                navigate("/")
+            }, 500);
+        }).catch(({response}) => {
+            //from axios, when u have an error, you have to destructur the response error because a lot of other things comes with it
+            e.target.classList.remove('disable');
+             toast.dismiss(loadingToast);
+            return toast.error(response.data.error);
+
+
+        })
+
+
+}
     return (
         <AnimationWrapper>
             <section className="w-screen min-h-screen grid items-center lg:grid-cols-2 py-16 lg:gap-4">
@@ -93,7 +156,7 @@ const PublishForm = () => {
                     </div>
 
                     <br />
-                    <button className="btn-dark px-8">Publish</button>
+                    <button className="btn-dark px-8" onClick = {publishBlog}>Publish</button>
                     
                     
                 </div>
@@ -101,6 +164,6 @@ const PublishForm = () => {
         </AnimationWrapper>
     );
     
-
+    
 }
 export default PublishForm;
