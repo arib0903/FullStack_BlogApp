@@ -2,6 +2,18 @@
 
 **Note:** This project is currently in development and will be deployed soon. 
 
+**Features Finished:** 
+- User Authentication
+- User Publish/Draft Blog Post
+
+**Features To Come:** 
+-  User Home Page populated with blogs
+-  User Dashboard + Settings
+-  Search Feature for Blogs and Users
+
+
+
+
 ## Overview
 
 Welcome to the Full-Stack Blogging Application! This project is designed and implemented to provide a comprehensive solution for managing and sharing blog posts. Leveraging the power of the MERN stack, it offers a wide range of features including Create, Read, Update, and Delete (CRUD) operations for blog posts.
