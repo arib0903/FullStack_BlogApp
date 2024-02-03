@@ -27,18 +27,14 @@ const BlogEditor = () => {
 
     //useEffect:
     useEffect(() => {
-        if(!textEditor.isReady){
+       
             setTextEditor(new EditorJS({
             holder: 'textEditor',
             data: content,
             tools: tools,
             placeholder: "Write your blog here...",
         }))
-
-        }
         
-        
-
 
     },[])
      const handleTitleKeyDown = (e) => {
@@ -70,6 +66,7 @@ const BlogEditor = () => {
             textEditor.save().then((data) => {
                 if(data.blocks.length){
                     //Updating the state with the blocks
+                    console.log(data)
                     setBlog({...blog, content: data})
                     setEditorState("publish")
                  }

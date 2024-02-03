@@ -26,9 +26,10 @@ const UserAuthForm = ({type}) => {
 
         //use axios to create request to the server
         //sends the form data to the server via the vite server domain + server route
+        console.log(import.meta.env.VITE_SERVER_DOMAIN + serverRoute);
         axios.post(import.meta.env.VITE_SERVER_DOMAIN + serverRoute, formData)
         .then(({data}) =>{
-            // console.log(data);  
+           
             storeInSession("user", JSON.stringify(data));  //here we store the user's session as a string 
             setUserAuth(data); //here we update the user data from App.jsx's setUserAuth function
         }).catch(({response}) => {

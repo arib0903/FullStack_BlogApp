@@ -23,6 +23,7 @@ const PublishForm = () => {
 
     }
     const handleCloseEvent = () => {
+        
         setEditorState("editor");
     }
 
