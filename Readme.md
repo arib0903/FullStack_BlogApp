@@ -5,9 +5,11 @@
 **Features Finished:** 
 - User Authentication
 - User Publish/Draft Blog Post
+- User Home Page populated with blogs
 
 **Features To Come:** 
--  User Home Page populated with blogs
+-  Post Likes with notifications 
+-  Nested Comments under posts
 -  User Dashboard + Settings
 -  Search Feature for Blogs and Users
 
