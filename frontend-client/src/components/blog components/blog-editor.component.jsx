@@ -1,5 +1,5 @@
 import {Link, useNavigate} from 'react-router-dom';
-import logo from '../../imgs/logo.png';
+import logo from '../../imgs/quill-drawing-a-line.png';
 import AnimationWrapper from '../../common/page-animation';
 import defaultBanner from '../../imgs/blog banner.png';
 import { uploadImage } from '../../common/aws';
@@ -18,14 +18,14 @@ const BlogEditor = () => {
 
 
 
-    //import the 
+    //import the blogStrucutre from the editor.js       and     the states
     let {blog, blog: {title, banner, content, tags,des},setBlog, textEditor, setTextEditor,setEditorState} = useContext(EditorContext)
-    // console.log(blog)
+    console.log(blog)
 
     let {userAuth: {access_token} } = useContext(UserContext);
     let navigate = useNavigate();
 
-    //useEffect:
+    // :
     useEffect(() => {
        
             setTextEditor(new EditorJS({
@@ -37,22 +37,60 @@ const BlogEditor = () => {
         
 
     },[])
+
+    /** Creating Function for updating data for title */
      const handleTitleKeyDown = (e) => {
             // console.log(e)
             // prevent user pressig the enter key:
             if(e.keyCode == 13){
                 e.preventDefault();
             }
-        }
+    }
 
+    const handleTitleChange = (e) => {
+        let input= e.target;
 
+        input.style.height = "auto";
+        input.style.height = input.scrollHeight + "px";
+        //give me the entire blog object and change the title property to the value of the input
+        setBlog({...blog, title: input.value})
+    }
 
 
         //To deal with the error with blank image
-        const handleError = (e) => {
+    const handleError = (e) => {
             let img = e.target;
             img.src = defaultBanner;
+    }
+
+
+    /** Creating Function For Uploading Banner to AWS */
+    const handleBannerUpload = (e) => {
+        // console.log(e)
+        let img = e.target.files[0];
+        console.log(img);
+        if(img){
+            let loadingToast = toast.loading("Uploading image...")
+            //calling function to upload image to aws in aws.jsx
+            uploadImage(img).then((url) => {
+                if(url){
+
+                    toast.dismiss(loadingToast);
+                    toast.success("Uploaded!")
+
+                    //here we get the ID of the image element and change the src to the uploaded image 
+                    setBlog({...blog, banner: url})
+                }
+            }).catch((err) => {
+                toast.dismiss(loadingToast);
+                return toast.error(err)
+
+            })
+
         }
+    } 
+
+    /** Creating Function For Publishing Blog */
     const handlePublishEvent = () => {  
         if(!banner.length){
             return toast.error("Please upload a banner")
@@ -62,6 +100,8 @@ const BlogEditor = () => {
             return toast.error("Please add a title to publish")
 
         }
+
+        // Saving blog content to the blog object using setBlog 
         if(textEditor.isReady){
             textEditor.save().then((data) => {
                 if(data.blocks.length){
@@ -81,43 +121,9 @@ const BlogEditor = () => {
         }
 
     }
-    const handleTitleChange = (e) => {
-        let input= e.target;
-
-        input.style.height = "auto";
-        input.style.height = input.scrollHeight + "px";
-        //give me the entire blog object and change the title property to the value of the input
-        setBlog({...blog, title: input.value})
-    }
 
 
-    const handleBannerUpload = (e) => {
-        // console.log(e)
-        let img = e.target.files[0];
-        console.log(img);
-        if(img){
-            let loadingToast = toast.loading("Uploading image...")
-            //calling function to upload image to aws 
-            uploadImage(img).then((url) => {
-                if(url){
-
-                    toast.dismiss(loadingToast);
-                    toast.success("Uploaded!")
-
-                    //here we get the ID of the image element and change the src to the uploaded image 
-                    setBlog({...blog, banner: url})
-                }
-            }).catch((err) => {
-                toast.dismiss(loadingToast);
-                return toast.error(err)
-
-            })
-
-        }
-
-       
-    } 
-
+    /** Creating Function For Saving Draft **/
     const handleSaveDraft = (e) => {
         if(e.target.className.includes('disable')){
             return;
@@ -177,8 +183,9 @@ const BlogEditor = () => {
         <>
         {/* Creating navbar */}
             <nav className="navbar">
-                <Link to = "/">
-                    <img src={logo} className='flex-none w-10' />
+                <Link to = "/" className='flex-none w-15 '>
+                    <img src={logo} className='flex-none h-10 object-contain' />
+                     <p className='font-script text-lg '>Writer's Avenue</p>
                 </Link>
 
                 <p className='max-md:hidden text-black line-clamp-1 w-full'>
@@ -202,7 +209,7 @@ const BlogEditor = () => {
         <AnimationWrapper>
             <section>
                 {/* editor + title + banner in this div */}
-                <div className='mx-auto mx-w-[900px] w-full '>
+                <div className='mx-auto mx-w-[700px] w-full '>
                     <div className='relative aspect-video bg-white border-4 border-grey hover:opacity-80 '>
                         <label htmlFor='uploadBanner'>
                             <input id="uploadBanner" type='file' accept='.png, .jpg, .jpeg' hidden onChange ={handleBannerUpload}/>

@@ -1,5 +1,6 @@
 import axios from "axios";
 
+//Function being used in blog-editor.component.jsx in handleBannerUpload
 export const uploadImage = async (img) => {
     //return the image URL:
     let imgUrl = null;

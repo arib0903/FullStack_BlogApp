@@ -22,12 +22,14 @@ export const EditorContext = createContext({})
 //components being used: publish-form.component & blog-editor.component
 const Editor = () => {
     
+    // 1. Creating the blogStructure so BlogEditor and PublishForm can use it
     const [blog, setBlog] = useState(blogStructure); //blog is the global state
 
-    // 1. make a state to track which of the 2 components we want to render
+    // 2. make a state to track which of the 2 components we want to render
     const [editorState, setEditorState] = useState("editor"); //default is publish-form
-    const [textEditor, setTextEditor] = useState({isReady:false}); //default is publish-form
+    const [textEditor, setTextEditor] = useState({isReady:false}); //updated by blog-editor.component with editor contents
 
+    // 3. get userAuth from App.js to check if user is logged in 
     let {userAuth: {access_token}} = useContext(UserContext);
     // alternative to the code above: UserContext.userAuth.access_token
 

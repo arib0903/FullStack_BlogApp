@@ -4,7 +4,10 @@ import UserAuthForm from "./pages/userAuthForm.page";
 import { createContext, useEffect,useState } from "react";
 import { lookInSession } from "./common/session";
 import Editor from "./pages/editor.pages";
-
+import HomePage from "./pages/home.page";
+import SearchPage from "./pages/search.page";
+import PageNotFound from "./pages/404.page";
+import ProfilePage from "./pages/profile.page";
 // 1. CREATE GLOBAL STATE 
 export const UserContext = createContext({});
 const App = () => {
@@ -24,11 +27,14 @@ const App = () => {
         <UserContext.Provider value = {{userAuth, setUserAuth}}>
             <Routes>
             {/* We nest the Navbar route(Parent route) with the other routes so we are able to see the navbar on each of these pages */}
-
             <Route path="/editor" element={<Editor></Editor>}/>
             <Route path="/" element={<Navbar />}>
+                <Route index element = {<HomePage/>}></Route>
                 <Route path="/signin" element={<UserAuthForm type = "sign-in"></UserAuthForm>} />
                 <Route path="/signup" element={<UserAuthForm type = "sign-up"></UserAuthForm>} />
+                <Route path="search/:query" element ={<SearchPage ></SearchPage>}/>
+                <Route path = "user/:id" element = {<ProfilePage></ProfilePage>}></Route>
+                <Route path = "*" element = {<PageNotFound></PageNotFound>}></Route>
             </Route>
         </Routes>
         </UserContext.Provider>

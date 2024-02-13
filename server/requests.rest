@@ -1,8 +1,8 @@
 
-POST http://localhost:3000/signin
+POST http://localhost:3000/get-profile
 Content-Type: application/json
 
 {
-  "email": "xxxxx@xxxxxxxxx",
-  "password": "xxxxxx"
+  "username": "mahboob49"
 }
+
