@@ -2,15 +2,12 @@
 
 **Note:** This project is currently in development and will be deployed soon. 
 
-**Features Finished:** 
+**Features ** 
 - User Authentication
-- User Publish/Draft Blog Post
+- User Publish/Draft + edit/delete Blog Post
 - User Home Page populated with blogs
 - Search Feature for Blogs and Users
 
-**Features To Come:** 
--  Nested Comments under posts
--  User Dashboard + Settings
 
 
 
