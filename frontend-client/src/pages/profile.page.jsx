@@ -98,6 +98,7 @@ const ProfilePage = () => {
         setProfileLoaded("");
         
     }
+console.log(blogs)
 
 
     return(
@@ -130,8 +131,10 @@ const ProfilePage = () => {
                         <InPageNavigation defaultHidden = {["About"]}routes = {["Blogs Published", "About" ]}>  
 
                             {/* Rendering Blogs via BlogPostCard component */}
+       
                             <>
                             {
+                                
                                 blogs == null ? <Loader/> :
                                 blogs.results.length ? 
                                     blogs.results.map((blog, index) => {
@@ -140,7 +143,7 @@ const ProfilePage = () => {
                                             <BlogPostCard BlogContent = {blog} author = {blog.author.personal_info}></BlogPostCard>
                                         </AnimationWrapper>
                                         )
-                                    }) : <NoDataMessage message={`No Blogs Published by ${blogs.username}`}></NoDataMessage>
+                                    }) : <NoDataMessage message={`No Blogs Published by ${fullname}`}></NoDataMessage>
 
                             }
                                 <LoadMoreDataBtn state ={blogs} fetchDataFun={getBlogs}></LoadMoreDataBtn>

@@ -18,7 +18,7 @@ export const uploadImage = async (img) => {
             data: img
         }).then(() => {
             imgUrl = uploadUrl.split("?")[0];
-            console.log(imgUrl);
+            // console.log(imgUrl);
         })
 
     })

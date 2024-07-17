@@ -111,9 +111,9 @@
         @apply text-2xl font-medium leading-7 line-clamp-3 sm:line-clamp-2;
     }
 
-    .blog-index{
-        @apply text-4xl sm:text-3xl lg:text-5xl font-bold text-grey leading-none;
-    }
+    /* .blog-index{
+        @apply text-4xl sm:text-3xl lg:text-5xl font-bold text-gray-800 leading-none;
+    } */
 }
 
 .ce-block__content, .ce-toolbar__content{

@@ -10,7 +10,7 @@ const PageNotFound = () => {
             <h1 className="text-4xl font-gelasio leading-7">Page Not Found</h1>
             <p className='text-dark-grey text-xl leading-7 -mt-8'>The page you are looking for does not exist. Head back to <Link to = "/" className='text-black underline'>Home Page</Link> </p>
 
-            <div className='mt-auto'>
+            <div className='mt-auto mr-10'>
                 
                 <div class="flex justify-center items-center ">
                     <div class="flex flex-row items-center">
@@ -20,7 +20,7 @@ const PageNotFound = () => {
                 </div>
 
                 
-                <p className='text-dark-grey text-sm mt-5'>The soul gathers here to hear stories of hope and relive forgotten memories</p>
+                <p className='text-dark-grey text-sm mt-5 ml-10'>"The place to share the journey of your conscience"</p>
             </div>
         </section>
     )

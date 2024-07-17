@@ -1,4 +1,4 @@
-import {Link, useNavigate} from 'react-router-dom';
+import {Link, useNavigate, useParams} from 'react-router-dom';
 import logo from '../../imgs/quill-drawing-a-line.png';
 import AnimationWrapper from '../../common/page-animation';
 import defaultBanner from '../../imgs/blog banner.png';
@@ -23,20 +23,24 @@ const BlogEditor = () => {
     console.log(blog)
 
     let {userAuth: {access_token} } = useContext(UserContext);
+    let {blog_id} = useParams();
+    console.log(blog_id)
     let navigate = useNavigate();
 
     // :
     useEffect(() => {
-       
+        title = ""
+           
             setTextEditor(new EditorJS({
             holder: 'textEditor',
-            data: content,
+            data: Array.isArray(content) ? content[0]: content,
             tools: tools,
             placeholder: "Write your blog here...",
         }))
-        
-
+            
     },[])
+
+
 
     /** Creating Function for updating data for title */
      const handleTitleKeyDown = (e) => {
@@ -55,7 +59,7 @@ const BlogEditor = () => {
         //give me the entire blog object and change the title property to the value of the input
         setBlog({...blog, title: input.value})
     }
-
+ 
 
         //To deal with the error with blank image
     const handleError = (e) => {
@@ -66,9 +70,11 @@ const BlogEditor = () => {
 
     /** Creating Function For Uploading Banner to AWS */
     const handleBannerUpload = (e) => {
-        // console.log(e)
+
+        console.log("from handleBannerUpload")
         let img = e.target.files[0];
-        console.log(img);
+
+        console.log("Uploading Image",img);
         if(img){
             let loadingToast = toast.loading("Uploading image...")
             //calling function to upload image to aws in aws.jsx
@@ -92,10 +98,10 @@ const BlogEditor = () => {
 
     /** Creating Function For Publishing Blog */
     const handlePublishEvent = () => {  
-        if(!banner.length){
-            return toast.error("Please upload a banner")
+        // if(!banner.length){
+        //     return toast.error("Please upload a banner")
 
-        }
+        // }
         if(!title.length){
             return toast.error("Please add a title to publish")
 
@@ -149,7 +155,7 @@ const BlogEditor = () => {
             draft: true
         }
 
-        axios.post(import.meta.env.VITE_SERVER_DOMAIN + "/create-blog", blogObject,{
+        axios.post(import.meta.env.VITE_SERVER_DOMAIN + "/create-blog", {...blogObject, id:blog_id},{
             headers: {
                 'Authorization': `Bearer ${access_token}`
             }
@@ -212,13 +218,16 @@ const BlogEditor = () => {
                 <div className='mx-auto mx-w-[700px] w-full '>
                     <div className='relative aspect-video bg-white border-4 border-grey hover:opacity-80 '>
                         <label htmlFor='uploadBanner'>
-                            <input id="uploadBanner" type='file' accept='.png, .jpg, .jpeg' hidden onChange ={handleBannerUpload}/>
+                            {/* <input id="uploadBanner" type='file' accept='.png, .jpg, .jpeg' hidden onChange ={handleBannerUpload}/> */}
+                            <input id="uploadBanner" type="file" accept=".png, .jpg, .jpeg"  hidden onChange ={handleBannerUpload}/>
+
                             <img id  = "blogImage" src={banner} className='z-20' onError = {handleError}/>
 
                         </label>
 
 
                     </div>
+                         
 
                     <textarea placeholder='Blog Title' className='text-4xl font-medium w-full h-20 outline-none resize-none mt-10 leading-tight placeholder:opacity-40'
                     onKeyDown={handleTitleKeyDown}

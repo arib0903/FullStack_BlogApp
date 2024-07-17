@@ -5,8 +5,9 @@ const MinimalBlogPost = ({blog, index}) => {
 
     let {title, blog_id: id, author: {personal_info:{fullname, username, profile_img}}, publishedAt} = blog 
     return(
-        <Link to = {`/blog/${id}`} className="flex gap-5 mb-8">
-            <h1 className='blog-index'>{index<10 ? "0" + (index+1): index}</h1>
+   
+        <Link to = {`/blog/${id}`} className="flex gap-5 mb-8 hover:bg-grey rounded-lg pl-2 pr-2 pt-2 pb-2">
+            <h1 className='text-4xl sm:text-3xl lg:text-5xl font-bold text-purple-400 leading-none; '>{index<10 ? "0" + (index+1): index}</h1>
 
             <div>
                 <div className="flex gap-2 items-center mb-7">
@@ -19,6 +20,7 @@ const MinimalBlogPost = ({blog, index}) => {
 
             </div>
         </Link>
+
     )
 
 }

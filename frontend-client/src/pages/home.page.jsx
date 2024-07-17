@@ -12,7 +12,7 @@ const HomePage = () => {
 
     let [blogs, setBlogs] = useState(null);
     let [trendingBlogs, setTrendingBlogs] = useState(null);
-    let categories = ["Tech", "Science", "Health", "Business", "Entertainment", "Sports", "Education", "Lifestyle", "Travel"]
+    let [categories,setCategories] = useState([]);
     let [pageState, setPageState] = useState("home");
     let [totaldocs, setTotaldocs] = useState(0);
 
@@ -43,6 +43,16 @@ const HomePage = () => {
             axios.get(import.meta.env.VITE_SERVER_DOMAIN + "/trending-blogs")
             .then(({data}) => {
                 setTrendingBlogs(data.blogs);
+            }).catch(err => {
+                console.log(err);
+            })
+        }
+    
+        const fetchTrendingTags = () => {
+            axios.get(import.meta.env.VITE_SERVER_DOMAIN + "/get-trending-tags")
+            .then(({data}) => {
+                console.log(data.topTags);
+                setCategories(data.topTags);
             }).catch(err => {
                 console.log(err);
             })
@@ -85,6 +95,7 @@ const HomePage = () => {
 
     useEffect(() => {
 
+
         if(pageState == "home"){
             fetchLatestBlogs({page: 1});
         }
@@ -95,7 +106,8 @@ const HomePage = () => {
         if(trendingBlogs == null){
             fetchTrendingBlogs();
         }
-        
+
+        fetchTrendingTags();
     },[pageState])
 
     
@@ -174,15 +186,14 @@ const HomePage = () => {
 
                 {/* Rendering Filters + Functionalities */}
                 <div className="min w-[40%] lg:min-w-[400px] max-w-min border-l border-grey pl-8 pt-3 max-md:hidden">
-                    <div className="flex flex-col gap-10">
+                    <div className="flex flex-col gap-8">
 
-                        <h1 className="font-medium text-xl mb-8">Stories from all interest</h1>
+                        <h1 className="font-medium text-xl ">Trending Blog Tags</h1>
                         <div className="flex gap-3 flex-wrap">
-
                             {
                                 categories.map((category, index) => {
                                     return (
-                                    <button onClick = {loadBlogByCategory} key = {index} className={"tag " + ( category.toLowerCase() == pageState ? " bg-black text-white " : " ")}>{category}
+                                    <button onClick = {loadBlogByCategory} key = {index} className={"tag hover:bg-black hover:text-white " + ( category.toLowerCase() == pageState ? " bg-black text-white " : " ")}>{category}
                                     </button>
                                     
                                     )
@@ -194,7 +205,7 @@ const HomePage = () => {
                     
 
                     <div>
-                        <h1 className="font-medium text-xl mb-8">Trending <i className="fi fi-rr-arrow-trend-up"></i>
+                        <h1 className="font-medium text-xl mb-8 mt-5">Trending Posts <i className="fi fi-rr-arrow-trend-up"></i>
                         
                         </h1>
 

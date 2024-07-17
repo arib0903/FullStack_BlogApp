@@ -11,6 +11,8 @@ export default {
       transparent: "transparent",
       twitter: "#1DA1F2",
       purple: "#8B46FF",
+      red: "#FF4E4E",
+      "purple-400": "#DBD5D1",
     },
 
     fontSize: {
