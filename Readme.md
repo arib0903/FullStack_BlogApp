@@ -3,6 +3,13 @@
 ## Live demo 
 https://writers-avenue.netlify.app/
 
+<img width="1482" alt="image" src="https://github.com/user-attachments/assets/6ba65f80-7d84-4fa3-b129-356e9231f940">
+
+
+<img width="1488" alt="image" src="https://github.com/user-attachments/assets/69f64432-d939-4b17-9073-77a1ea6073ec">
+
+
+
 
 ## Features
 - User Authentication
