@@ -8,6 +8,7 @@ https://writers-avenue.netlify.app/
 
 <img width="1488" alt="image" src="https://github.com/user-attachments/assets/69f64432-d939-4b17-9073-77a1ea6073ec">
 
+<img width="1481" alt="image" src="https://github.com/user-attachments/assets/c9e9f6fb-59ef-4c66-978c-26cc1ec0b937">
 
 
 
