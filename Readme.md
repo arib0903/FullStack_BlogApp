@@ -6,12 +6,11 @@
 - User Authentication
 - User Publish/Draft Blog Post
 - User Home Page populated with blogs
+- Search Feature for Blogs and Users
 
 **Features To Come:** 
--  Post Likes with notifications 
 -  Nested Comments under posts
 -  User Dashboard + Settings
--  Search Feature for Blogs and Users
 
 
 
