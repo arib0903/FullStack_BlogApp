@@ -8,6 +8,7 @@ import MinimalBlogPost from "../components/nobanner-blog-post.component";
 import NoDataMessage from "../components/nodata.component";
 import { filterPaginationData } from "../common/filter-pagination-data";
 import LoadMoreDataBtn from "../components/load-more.component";
+import FooterComp from "../components/footer-component";
 const HomePage = () => {
 
     let [blogs, setBlogs] = useState(null);
@@ -224,7 +225,9 @@ const HomePage = () => {
                     
                 </div>
                 </div>
+
             </section>
+
 
 
         </AnimationWrapper>

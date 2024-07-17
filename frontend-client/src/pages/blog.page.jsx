@@ -7,6 +7,8 @@ import { getDay } from "../common/date";
 import BlogInteraction from "../components/blog components/blog-interaction.component";
 import BlogPostCard from "../components/blog components/blog-post.component";
 import BlogContent from "../components/blog components/blog-content.component";
+import P from "@editorjs/image";
+import NoDataMessage from "../components/nodata.component";
 
 
 export const blogStructure = {  
@@ -139,7 +141,7 @@ const BlogPage = () => {
                         }
 
                         </>
-                        : " "
+                        : <NoDataMessage message= "No similar blogs found "></NoDataMessage>
                         
                     }
                    

@@ -53,6 +53,11 @@ const BlogInteraction = () => {
     }
 
     const handleDelete = () => {
+        const enteredUsername = prompt("Please enter your username to confirm deletion:");
+            if (enteredUsername !== author_username) { 
+                toast.error("Username is incorrect. Deletion cancelled.");
+                return;
+            }
         let loadingToast = toast.loading("Deleting Blog...");
         axios.post(import.meta.env.VITE_SERVER_DOMAIN + "/delete-blog", {_id, blog_id}, {
                 headers: {
@@ -92,13 +97,14 @@ const BlogInteraction = () => {
                     <p className="text-xl text-dark-grey">{total_comments}</p>
                 </div> */}
 
-                <div className="flex gap-6 items-center ">
+                <div className="flex items-center justify-between w-full">
                     {
                         username === author_username ?
                         (
                         <>
                             <Link to = {`/editor/${blog_id}`} className="underline hover:text-purple">Edit Post</Link>
-                            <button className="w-10 h-10 rounded-full flex items-center justify-center bg-grey/80" onClick={handleDelete}> delete</button>
+                            <button className="flex items-center justify-center w-32 h-10 rounded-full bg-black hover:bg-red text-white focus:outline-none"onClick={handleDelete}> delete</button>
+
                         </>
                         ): " "
                         

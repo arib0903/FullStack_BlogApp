@@ -10,6 +10,7 @@ import PageNotFound from "./pages/404.page";
 import ProfilePage from "./pages/profile.page";
 import BlogPage from "./pages/blog.page";
 import TestLike from "./components/blog components/test";
+import FooterComp from "./components/footer-component";
 // 1. CREATE GLOBAL STATE 
 export const UserContext = createContext({});
 const App = () => {
@@ -44,6 +45,7 @@ const App = () => {
                 <Route path = "test" element = {<TestLike></TestLike>}></Route>
             </Route>
         </Routes>
+        <FooterComp></FooterComp>
         </UserContext.Provider>
         
     )
