@@ -1,7 +1,10 @@
 # Full-Stack Blogging Application 
 
+## Live demo 
+https://writers-avenue.netlify.app/
 
-**Features ** 
+
+## Features
 - User Authentication
 - User Publish/Draft + edit/delete Blog Post
 - User Home Page populated with blogs
