@@ -5,7 +5,7 @@ import cors from "cors";
 import {
   signinController,
   signupController,
-} from "./server/controllers/userControllers.js";
+} from "./controllers/userControllers.js";
 import {
   allLatestBlogsCountController,
   createBlogController,
@@ -15,15 +15,15 @@ import {
   getTrendingTagsController,
   searchBlogsCountController,
   searchUsersController,
-} from "./server/controllers/blogControllers.js";
-import { verifyJWT } from "./server/middleware/verifyJWT.js";
-import { generateUploadURLController } from "./server/controllers/authControllers.js";
-import { searchBlogsController } from "./server/controllers/blogControllers.js";
-import Blog from "./server/Schema/Blog.js";
-import User from "./server/Schema/User.js";
-import Test from "./server/Schema/Test.js";
+} from "./controllers/blogControllers.js";
+import { verifyJWT } from "./middleware/verifyJWT.js";
+import { generateUploadURLController } from "./controllers/authControllers.js";
+import { searchBlogsController } from "./controllers/blogControllers.js";
+import Blog from "./Schema/Blog.js";
+import User from "./Schema/User.js";
+import Test from "./Schema/Test.js";
 
-import { getProfileController } from "./server/controllers/profileControllers.js";
+import { getProfileController } from "./controllers/profileControllers.js";
 const server = express();
 let PORT = 3000;
 // let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; // regex for email
