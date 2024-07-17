@@ -1,0 +1,12 @@
+
+# POST http://localhost:3000/get-blog
+# Content-Type: application/json
+
+# {
+#   "blog_id": "Chicken-Over-rice-is-better-than-sushiXp3G9o7DvBcjCC4lHt6s1"
+# }
+
+
+
+GET http://localhost:3000/get-trending-tags
+Content-Type: application/json
