@@ -1,6 +1,5 @@
 # Full-Stack Blogging Application 
 
-**Note:** This project is currently in development and will be deployed soon. 
 
 **Features ** 
 - User Authentication
